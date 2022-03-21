@@ -1,12 +1,12 @@
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace BeerReview.Models
 {
-  public class BeerReviewContext : DbContext
+  public class BeerReviewContext : IdentityDbContext<ApplicationUser>
   {
     public DbSet<Beer> Beers { get; set; }
-    public DbSet<Drinker> Drinkers { get; set; }
-    public DbSet<BeerDrinker> BeerDrinker { get; set; }
+    public DbSet<BeerRating> BeerRatings { get; set; }
     public DbSet<Review> Reviews { get; set; }
 
     public BeerReviewContext(DbContextOptions options) : base(options) { }

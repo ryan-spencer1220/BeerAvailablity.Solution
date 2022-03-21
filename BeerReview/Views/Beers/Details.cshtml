@@ -10,7 +10,7 @@
 <h3>@Html.DisplayFor(model => model.Name)</h3>
 <h3>@Html.DisplayNameFor(model => model.ABV): @Html.DisplayFor(model => model.ABV)</h3>
 
-@if(@Model.JoinEntities.Count == 0)
+<!-- @* @if(@Model.JoinEntities.Count == 0)
 {
   <p>No one has had this beer.</p>
 }
@@ -20,16 +20,16 @@ else
   <ul>
   @foreach(var join in Model.JoinEntities)
   {
-    <li>@Html.ActionLink($"{join.Drinker.Name}", "Details", "Drinkers", new { id = join.Drinker.DrinkerId })</li>
+    <li>@Html.ActionLink($"{join.Review.Title}", "Details", "Drinkers", new { id = join.Review.ReviewId })</li>
   }
   </ul>
-}
+} *@ -->
 
 <h4>Reviews of this beer:</h4>
   <ul>
-  @foreach(var review in Model.Reviews)
+  @foreach(var review in Model.JoinEntities)
   {
-    <li>@Html.ActionLink($"{review.Title}", "Details", "Reviews", new { id = review.ReviewId })</li>
+    <li>@Html.ActionLink($"{review.Review.Title}", "Details", "Reviews", new { id = review.ReviewId })</li>
   }
   </ul>
 

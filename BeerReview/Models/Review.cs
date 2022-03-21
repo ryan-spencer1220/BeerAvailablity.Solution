@@ -5,12 +5,14 @@ namespace BeerReview.Models
 {
   public class Review
   {
+    public Review()
+    {
+      this.JoinEntities = new HashSet<BeerRating>();
+    }
     public int ReviewId { get; set; }
-    public int BeerId { get; set; }
-    public int DrinkerId { get; set; }
     public string Title { get; set; }
     public string Description { get; set; }
-    public virtual Drinker Drinker { get; set; }
-    public virtual Beer Beer { get; set; }
+    public virtual ApplicationUser User { get; set; }
+    public virtual ICollection<BeerRating> JoinEntities { get; set; }
   }
 }

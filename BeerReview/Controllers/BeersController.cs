@@ -27,9 +27,9 @@ namespace BeerReview.Controllers
     }
 
     [HttpPost]
-    public ActionResult Create(Beer beer)
+    public ActionResult Create(Beer Beer)
     {
-      _db.Beers.Add(beer);
+      _db.Beers.Add(Beer);
       _db.SaveChanges();
       return RedirectToAction("Index");
     }
@@ -37,35 +37,35 @@ namespace BeerReview.Controllers
     public ActionResult Details(int id)
     {
       var thisBeer = _db.Beers
-        .Include(beer => beer.JoinEntities)
-        .ThenInclude(join => join.Drinker)
-        .FirstOrDefault(beer => beer.BeerId == id);
+          .Include(Beer => Beer.JoinEntities)
+          .ThenInclude(join => join.Review)
+          .FirstOrDefault(Beer => Beer.BeerId == id);
       return View(thisBeer);
     }
     public ActionResult Edit(int id)
     {
-      var thisBeer = _db.Beers.FirstOrDefault(beer => beer.BeerId == id);
+      var thisBeer = _db.Beers.FirstOrDefault(Beer => Beer.BeerId == id);
       return View(thisBeer);
     }
 
     [HttpPost]
-    public ActionResult Edit(Beer beer)
+    public ActionResult Edit(Beer Beer)
     {
-      _db.Entry(beer).State = EntityState.Modified;
+      _db.Entry(Beer).State = EntityState.Modified;
       _db.SaveChanges();
       return RedirectToAction("Index");
     }
 
     public ActionResult Delete(int id)
     {
-      var thisBeer = _db.Beers.FirstOrDefault(beer => beer.BeerId == id);
+      var thisBeer = _db.Beers.FirstOrDefault(Beer => Beer.BeerId == id);
       return View(thisBeer);
     }
 
     [HttpPost, ActionName("Delete")]
     public ActionResult DeleteConfirmed(int id)
     {
-      var thisBeer = _db.Beers.FirstOrDefault(beer => beer.BeerId == id);
+      var thisBeer = _db.Beers.FirstOrDefault(Beer => Beer.BeerId == id);
       _db.Beers.Remove(thisBeer);
       _db.SaveChanges();
       return RedirectToAction("Index");

@@ -7,14 +7,12 @@ namespace BeerReview.Models
   {
     public Beer()
     {
-      this.JoinEntities = new HashSet<BeerDrinker>();
-      this.Reviews = new HashSet<Review>();
+      this.JoinEntities = new HashSet<BeerRating>();
     }
 
     public int BeerId { get; set; }
     public string Name { get; set; }
     public double ABV { get; set; }
-    public virtual ICollection<Review> Reviews { get; set; }
-    public virtual ICollection<BeerDrinker> JoinEntities { get; set; }
+    public virtual ICollection<BeerRating> JoinEntities { get; set; }
   }
 }

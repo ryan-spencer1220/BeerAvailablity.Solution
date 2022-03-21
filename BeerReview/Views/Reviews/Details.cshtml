@@ -7,9 +7,17 @@
 
 <h2>Review Details</h2>
 <hr />
+<ul>
+@foreach(var beer in Model.JoinEntities)
+{
+  <li>@Html.ActionLink($"{beer.Beer.Name}", "Details", "Reviews", new { id = beer.BeerId })</li>
+}
+</ul>
 <h3>@Html.DisplayNameFor(model => model.Title): @Html.DisplayFor(model => model.Title)</h3>
-<h3>Beer Name: @Html.ActionLink($"{Model.Beer.Name}", "Details", "Beers", new { id = Model.Beer.BeerId })</h3>
-<h3>User Name: @Html.ActionLink($"{Model.Drinker.Name}", "Details", "Drinkers", new { id = Model.Drinker.DrinkerId })</h3>
+@* <h3>Beer Name: @Html.ActionLink($"{Model.JoinEntities.J}", "Details", "Beers", new { id = Model.Beer.BeerId })</h3> *@
+@* <h3>User Name: @Html.ActionLink($"{Model.Title}", "Details", "Drinkers", new { id = Model.ReviewId })</h3> *@
+
+
 
 <h3>Review: @Html.DisplayFor(model => model.Description)</h3>
 

@@ -3,14 +3,16 @@ using System;
 using BeerReview.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BeerReview.Migrations
 {
     [DbContext(typeof(BeerReviewContext))]
-    partial class BeerReviewContextModelSnapshot : ModelSnapshot
+    [Migration("20220321204354_Authorization")]
+    partial class Authorization
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -98,25 +100,42 @@ namespace BeerReview.Migrations
                     b.ToTable("Beers");
                 });
 
-            modelBuilder.Entity("BeerReview.Models.BeerRating", b =>
+            modelBuilder.Entity("BeerReview.Models.BeerDrinker", b =>
                 {
-                    b.Property<int>("BeerRatingId")
+                    b.Property<int>("BeerDrinkerId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     b.Property<int>("BeerId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ReviewId")
+                    b.Property<int>("DrinkerId")
                         .HasColumnType("int");
 
-                    b.HasKey("BeerRatingId");
+                    b.HasKey("BeerDrinkerId");
 
                     b.HasIndex("BeerId");
 
-                    b.HasIndex("ReviewId");
+                    b.HasIndex("DrinkerId");
 
-                    b.ToTable("BeerRatings");
+                    b.ToTable("BeerDrinker");
+                });
+
+            modelBuilder.Entity("BeerReview.Models.Drinker", b =>
+                {
+                    b.Property<int>("DrinkerId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<DateTime>("SignUp")
+                        .HasColumnType("datetime(6)");
+
+                    b.HasKey("DrinkerId");
+
+                    b.ToTable("Drinkers");
                 });
 
             modelBuilder.Entity("BeerReview.Models.Review", b =>
@@ -125,18 +144,23 @@ namespace BeerReview.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    b.Property<int>("BeerId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Description")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<int>("DrinkerId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Title")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
-
                     b.HasKey("ReviewId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("BeerId");
+
+                    b.HasIndex("DrinkerId");
 
                     b.ToTable("Reviews");
                 });
@@ -269,7 +293,7 @@ namespace BeerReview.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("BeerReview.Models.BeerRating", b =>
+            modelBuilder.Entity("BeerReview.Models.BeerDrinker", b =>
                 {
                     b.HasOne("BeerReview.Models.Beer", "Beer")
                         .WithMany("JoinEntities")
@@ -277,24 +301,34 @@ namespace BeerReview.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("BeerReview.Models.Review", "Review")
+                    b.HasOne("BeerReview.Models.Drinker", "Drinker")
                         .WithMany("JoinEntities")
-                        .HasForeignKey("ReviewId")
+                        .HasForeignKey("DrinkerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Beer");
 
-                    b.Navigation("Review");
+                    b.Navigation("Drinker");
                 });
 
             modelBuilder.Entity("BeerReview.Models.Review", b =>
                 {
-                    b.HasOne("BeerReview.Models.ApplicationUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
+                    b.HasOne("BeerReview.Models.Beer", "Beer")
+                        .WithMany("Reviews")
+                        .HasForeignKey("BeerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("User");
+                    b.HasOne("BeerReview.Models.Drinker", "Drinker")
+                        .WithMany("Reviews")
+                        .HasForeignKey("DrinkerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Beer");
+
+                    b.Navigation("Drinker");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -351,11 +385,15 @@ namespace BeerReview.Migrations
             modelBuilder.Entity("BeerReview.Models.Beer", b =>
                 {
                     b.Navigation("JoinEntities");
+
+                    b.Navigation("Reviews");
                 });
 
-            modelBuilder.Entity("BeerReview.Models.Review", b =>
+            modelBuilder.Entity("BeerReview.Models.Drinker", b =>
                 {
                     b.Navigation("JoinEntities");
+
+                    b.Navigation("Reviews");
                 });
 #pragma warning restore 612, 618
         }
