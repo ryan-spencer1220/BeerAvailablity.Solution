@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace BeerReview.Models
+namespace BeerAvailability.Models
 {
   public class Store
   {

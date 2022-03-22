@@ -1,0 +1,23 @@
+@{
+  Layout = "_Layout";
+}
+
+@model BeerAvailability.Models.Store
+
+<h2>Edit Store</h2>
+
+@using (Html.BeginForm())
+{
+  @Html.HiddenFor(model => model.StoreId)
+
+  @Html.LabelFor(model => model.Name)
+  @Html.TextBoxFor(model => model.Name)
+
+  @Html.LabelFor(model => model.Location)
+  @Html.TextBoxFor(model => model.Location)
+
+  <input type="submit" value="Save" />
+}
+
+<p>@Html.ActionLink("Back to list", "Index")</p>
+

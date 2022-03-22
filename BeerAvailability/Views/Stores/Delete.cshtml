@@ -1,0 +1,15 @@
+@{
+  Layout = "_Layout";
+}
+
+@model BeerAvailability.Models.Store
+
+<h2>Are you sure you want to delete this store and all of it's inventory?</h2>
+
+@Html.DisplayNameFor(model => model.Name): @Html.DisplayFor(model => model.Name)
+
+@using (Html.BeginForm())
+{
+  <input type="submit" value="Delete" />
+}
+@Html.ActionLink("Back to Store List", "Index")

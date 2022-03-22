@@ -1,18 +1,19 @@
 using System;
 using System.Collections.Generic;
 
-namespace BeerReview.Models
+namespace BeerAvailability.Models
 {
-  public class Store
+  public class Beer
   {
-    public Store()
+    public Beer()
     {
       this.JoinEntities = new HashSet<Inventory>();
     }
-    public int StoreId { get; set; }
+
+    public int BeerId { get; set; }
     public string Name { get; set; }
-    public string Location { get; set; }
-    public virtual ApplicationUser User { get; set; }
+    public double ABV { get; set; }
+    public string PackageType { get; set; }
     public virtual ICollection<Inventory> JoinEntities { get; set; }
   }
 }

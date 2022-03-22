@@ -1,0 +1,21 @@
+@{
+  Layout = "_Layout";
+}
+
+@using BeerAvailability.Models;
+@model BeerAvailability.Models.Store;
+
+<h2>Store Details</h2>
+<hr />
+<h3>@Html.DisplayNameFor(model => model.Name): @Html.DisplayFor(model => model.Name)</h3>
+<h3>Location: @Html.DisplayFor(model => model.Location)</h3>
+<ul>
+@foreach(var beer in Model.JoinEntities)
+{
+  <li>@Html.ActionLink($"{beer.Beer.Name}", "Details", "Stores", new { id = beer.BeerId })</li>
+}
+</ul>
+
+<p>@Html.ActionLink("Return To Store List", "Index")</p>
+<p>@Html.ActionLink("Edit Store", "Edit", new { id = Model.StoreId })</p>
+<p>@Html.ActionLink("Delete Store", "Delete", new { id = Model.StoreId })</p>

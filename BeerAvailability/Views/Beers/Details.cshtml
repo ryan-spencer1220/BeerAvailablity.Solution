@@ -1,0 +1,38 @@
+@{
+  Layout = "_Layout";
+}
+
+@using BeerAvailability.Models;
+@model BeerAvailability.Models.Beer;
+
+<h2>Beer Details</h2>
+<hr />
+<h3>@Html.DisplayFor(model => model.Name)</h3>
+<h3>@Html.DisplayNameFor(model => model.ABV): @Html.DisplayFor(model => model.ABV)</h3>
+
+<!-- @* @if(@Model.JoinEntities.Count == 0)
+{
+  <p>No one has had this beer.</p>
+}
+else
+{
+  <h4>Drinkers of this beer:</h4>
+  <ul>
+  @foreach(var join in Model.JoinEntities)
+  {
+    <li>@Html.ActionLink($"{join.Review.Title}", "Details", "Drinkers", new { id = join.Review.ReviewId })</li>
+  }
+  </ul>
+} *@ -->
+
+<h4>Locations of this beer:</h4>
+  <ul>
+  @foreach(var store in Model.JoinEntities)
+  {
+    <li>@Html.ActionLink($"{store.Store.Name}", "Details", "Reviews", new { id = store.StoreId })</li>
+  }
+  </ul>
+
+<p>@Html.ActionLink("Back to Beers", "Index")</p>
+<p>@Html.ActionLink("Edit Beer", "Edit", new { id = Model.BeerId })</p>
+<p>@Html.ActionLink("Delete Beer", "Delete", new { id = Model.BeerId })</p>
