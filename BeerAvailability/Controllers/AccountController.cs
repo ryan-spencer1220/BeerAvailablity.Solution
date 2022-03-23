@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Identity;
 using BeerAvailability.Models;
 using System.Threading.Tasks;
 using BeerAvailability.ViewModels;
+using System.Security.Claims;
+
 
 namespace BeerAvailability.Controllers
 {
@@ -32,7 +34,7 @@ namespace BeerAvailability.Controllers
         [HttpPost]
         public async Task<ActionResult> Register (RegisterViewModel model)
         {
-            var user = new ApplicationUser { UserName = model.Email };
+            var user = new ApplicationUser { UserName = model.UserName, Email = model.Email, FirstName = model.FirstName, LastName = model.LastName };
             IdentityResult result = await _userManager.CreateAsync(user, model.Password);
             if (result.Succeeded)
             {
@@ -60,6 +62,13 @@ namespace BeerAvailability.Controllers
             {
                 return View();
             }
+        }
+
+        public async Task<ActionResult> Details()
+        {
+            var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var currentUser = await _userManager.FindByIdAsync(userId);
+            return View(currentUser);
         }
 
         [HttpPost]

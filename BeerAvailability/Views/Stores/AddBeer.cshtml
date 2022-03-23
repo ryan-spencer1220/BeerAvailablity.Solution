@@ -1,0 +1,21 @@
+@{
+  Layout = "_Layout";
+}
+
+@model BeerAvailability.Models.Store
+
+<h2>Add New Beer</h2>
+
+<h4>Add Beer To @Html.DisplayFor(model => model.Name)</h4>
+
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(model => model.StoreId)
+
+    @Html.Label("Select Beer")
+    @Html.DropDownList("BeerId")
+
+    <input type="submit" value="Save" />
+}
+
+<p>@Html.ActionLink("Back to list", "Index")</p>

@@ -11,10 +11,13 @@
 {
   <h3>No stores have been added yet!</h3>
 } 
-
-@foreach (Store store in Model)
+else
 {
-  <li>@Html.ActionLink($"{store.Name}", "Details", new { id = store.StoreId })</li>
+  var sortedList = Model.OrderBy(store => store.Name);  
+  foreach(var store in sortedList)
+  {
+    <p>@Html.ActionLink($"{store.Name}", "Details", new { id = store.StoreId })</p>  
+  }
 }
 
 <p>@Html.ActionLink("Add New Store", "Create")</p>

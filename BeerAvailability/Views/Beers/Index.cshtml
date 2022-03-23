@@ -17,6 +17,11 @@
     <li>@Html.ActionLink($"{beer.Name}", "Details", new { id = beer.BeerId })</li>
   }
 </ul>
+<br>
+@using (Html.BeginForm("DeleteAll", "Beers"))
+{
+  <input type="submit" value="DeleteAll" />
+}
 
 <p>@Html.ActionLink("Add new beer", "Create")</p>
 <p>@Html.ActionLink("Home", "Index", "Home")</p>

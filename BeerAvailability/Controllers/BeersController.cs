@@ -1,8 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using BeerAvailability.Models;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 namespace BeerAvailability.Controllers
 {
@@ -17,8 +19,8 @@ namespace BeerAvailability.Controllers
 
     public ActionResult Index()
     {
-      List<Beer> model = _db.Beers.ToList();
-      return View(model);
+      var model = _db.Beers.OrderBy(beer => beer.Name);
+      return View(model.ToList());
     }
 
     public ActionResult Create()
@@ -62,11 +64,22 @@ namespace BeerAvailability.Controllers
       return View(thisBeer);
     }
 
-    [HttpPost, ActionName("Delete")]
-    public ActionResult DeleteConfirmed(int id)
+    [HttpPost]
+    public ActionResult DeleteBeer(int BeerId)
     {
-      var thisBeer = _db.Beers.FirstOrDefault(Beer => Beer.BeerId == id);
+      var thisBeer = _db.Beers.FirstOrDefault(Beer => Beer.BeerId == BeerId);
       _db.Beers.Remove(thisBeer);
+      _db.SaveChanges();
+      return RedirectToAction("Index");
+    }
+
+    [HttpPost]
+    public ActionResult DeleteAll()
+    {
+      foreach(Beer beer in _db.Beers)
+      {
+      _db.Beers.Remove(beer);
+      }
       _db.SaveChanges();
       return RedirectToAction("Index");
     }

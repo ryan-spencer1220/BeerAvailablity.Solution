@@ -95,7 +95,7 @@ namespace BeerAvailability.Controllers
         _db.Inventory.Add(new Inventory() { BeerId = BeerId, StoreId = store.StoreId });
         _db.SaveChanges();
       }
-      return RedirectToAction("Index");
+      return RedirectToAction("Details", new { id = store.StoreId });
     }
     
     public ActionResult Delete(int id)
@@ -109,6 +109,10 @@ namespace BeerAvailability.Controllers
     {
       var thisStore = _db.Stores.FirstOrDefault(stores => stores.StoreId == id);
       _db.Stores.Remove(thisStore);
+      foreach (var beer in thisStore.JoinEntities)
+      {
+        _db.Inventory.Remove(beer);
+      }
       _db.SaveChanges();
       return RedirectToAction("Index");
     }

@@ -1,14 +1,30 @@
+using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using BeerAvailability.Models;
+using System.Collections.Generic;
+using System.Linq;
 
-namespace BeerReview.Controllers
+namespace BeerAvailability.Controllers
 {
     public class HomeController : Controller
     {
+      private readonly BeerAvailabilityContext _db;
 
-      [HttpGet("/")]
-      public ActionResult Index()
+      public HomeController(BeerAvailabilityContext db)
       {
-        return View();
+        _db = db;
       }
+      public ActionResult Index(string search)
+      {
+        List<Beer> results = _db.Beers.Where(beer => beer.Name.Contains(search)).ToList();
+        return View(results);
+      }
+
+      public IActionResult BreweryApi(string breweryName)
+        {
+            var brewery = Brewery.GetBreweries(breweryName);
+            return View(brewery);
+        }
     }
 }
