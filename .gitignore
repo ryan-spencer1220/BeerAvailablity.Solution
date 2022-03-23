@@ -1,4 +1,5 @@
-*/obj/
-*/bin/
-.vscode
-*/appsettings.json
+*/bin
+*/obj
+bin
+obj
+EnvironmentVariables.cs
